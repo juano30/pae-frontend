@@ -1,6 +1,3 @@
-// === CONFIGURACIÓN API (InfinityFree) ===
-const API_BASE = "https://pae.42web.io/"; // tu dominio de InfinityFree
-
 // Endpoints
 const URL_GUARDAR_VCT      = API_BASE + "guardar_form_vct.php";
 const URL_RESPONSABLES     = API_BASE + "obtener_responsables.php";
