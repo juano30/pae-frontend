@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PAE – Administración</title>
+  <link rel="stylesheet" href="style.css?v=3.0.1">
+</head>
+<body>
+  <header class="appbar">
+    <div class="brand">
+      <img src="assets/logo-pae.png" alt="Logo PAE" />
+      <div class="title">
+        <b>PAE – Administración</b>
+        <small>Usuarios y roles</small>
+      </div>
+    </div>
+    <nav class="status">
+      <a class="back-btn" href="./">← Volver</a>
+    </nav>
+  </header>
+
+  <main class="container">
+   
+
+    <!-- Formulario Crear / Editar -->
+    <section class="card admin-form-card">
+      <h2>Crear / Editar</h2>
+
+      <form id="user-form">
+        <input type="hidden" id="u-id">
+
+        <div class="admin-form-grid">
+          <label>
+            Usuario
+            <input type="text" id="u-username" required>
+          </label>
+
+          <label>
+            Contraseña (dejar vacío para no cambiar)
+            <input type="password" id="u-pass">
+          </label>
+
+          <label>
+            Rol
+            <select id="u-role"></select>
+          </label>
+        </div>
+
+        <div class="admin-form-actions">
+          <button class="btn" type="submit">Guardar</button>
+          <button class="btn danger" type="button" id="u-delete" disabled>Eliminar</button>
+        </div>
+      </form>
+    </section>
+
+     <!-- Tabla de usuarios -->
+    <section class="card">
+      <h2>Usuarios</h2>
+      <div class="row">
+        <button id="btn-reload" class="btn">Recargar</button>
+      </div>
+      <div id="users-table" class="list"></div>
+    </section>
+    
+  </main>
+
+  <footer class="app-footer">
+    <div class="wrap">
+      <div>
+        <small>© <span id="year"></span> PAE Antioquia — v3.0.0</small>
+      </div>
+      <div class="links">
+        <a class="link" href="./">Inicio</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="db.js"></script>
+  <script src="admin.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
+

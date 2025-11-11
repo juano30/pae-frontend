@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PAE</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="manifest" href="/manifest.json">
+  <script src="/app.js"></script>
+  <meta name="theme-color" content="#00bcd4">
+</head>
+
+<body>
+  <header class="appbar">
+    <div class="brand">
+      <img src="assets/logo-pae.png" alt="PAE">
+      <div class="title">
+        <b>PAEnamorarte</b>
+        <small>Programa de alimentación escolar</small>
+      </div>
+    </div>
+    <nav style="display:flex;gap:12px;align-items:center">
+      <a class="link" href="admin.html" id="admin-link" hidden data-role="admin">Administración</a>
+      <span id="net-status" class="badge">...</span>
+      <a class="btn secondary" href="/pae/server/export_csv.php" target="_blank" hidden data-role="export">Exportar
+        CSV</a>
+      <button id="btn-sync" class="btn" hidden data-role="pend sent form">Sincronizar</button>
+      <button id="btn-install" class="btn secondary" hidden>Instalar</button>
+      <button id="btn-logout" class="btn danger" hidden>Salir</button>
+    </nav>
+  </header>
+  <main class="login-screen">
+    <div class="container">
+    <section id="sec-login" class="card">
+      <h2>Ingreso</h2>
+      <form id="login-form" class="grid">
+        <label>Usuario <input type="text" id="user" required placeholder="admin"></label>
+        <label>Contraseña <input type="password" id="pass" required placeholder="123456"></label>
+        <div class="row"><button class="btn" type="submit">Entrar</button><span class="muted">Demo: admin /
+            123456</span></div>
+      </form>
+    </section>
+    <section id="sec-form" class="card" hidden data-role="form">
+      <h2>Formulario</h2>
+      <div class="grid">
+        <label>Selecciona formulario
+          <select id="form-select">
+            <option value="visita">Verificación condiciones de Transporte</option>
+            <option value="insumos">Entrega de Insumos</option>
+          </select>
+        </label>
+      </div>
+
+
+  <form id="report-form" class="form-grid">
+
+    <!-- ====== DATOS GENERALES ====== -->
+    <h3 class="section-title">Datos generales</h3>
+    <div class="grid grid-4 section-body">
+      <label>Fecha
+        <input type="date" id="fecha" required>
+      </label>
+
+      <label>Subregión
+        <select id="subregion" required>
+          <option value="">Seleccione…</option>
+        </select>
+      </label>
+
+      <label>Municipio
+        <select id="municipio" required disabled>
+          <option value="">Seleccione la subregión primero…</option>
+        </select>
+      </label>
+
+      <label>Operador
+        <input type="text" id="operador" required>
+      </label>
+    </div>
+
+    <!-- ====== DATOS DEL PROVEEDOR / TRANSPORTE ====== -->
+    <h3 class="section-title">Proveedor y transporte</h3>
+    <div class="grid grid-4 section-body">
+      <label>Proveedor
+        <input type="text" id="proveedor" required>
+      </label>
+
+      <label>Alimentos que provee
+        <input type="text" id="alimentosprovee" required>
+      </label>
+
+      <label>Dirección
+        <input type="text" id="direccion" required>
+      </label>
+
+      <label>Celular
+        <input type="text" inputmode="numeric" id="celular" required>
+      </label>
+
+      <!--<label>Transporte
+        <select id="id_transporteVCT_fk" required>
+          <option value="">Seleccione...</option>
+        </select>
+      </label>-->
+    </div>
+
+    <!-- ====== VERIFICACIÓN CONDICIONES DE TRANSPORTE ====== -->
+    <h3 class="section-title">Verificación condiciones de transporte</h3>
+
+   <div class="grid grid-4 section-body">
+  <label>Transporte
+    <select id="id_transporteVCT_fk" required>
+      <option value="">Seleccione...</option>
+    </select>
+  </label>
+</div>
+
+
+<div class="bloque-preguntas">
+  
+  <div class="pregunta">
+    <p>El transporte se realiza en condiciones tales que excluye la contaminación y/o la proliferación de microorganismos y protege contra la alteración del alimento o los daños del envase.</p>
+    <select id="r11" required>
+      <option value="">Seleccione...</option>
+    </select>
+  </div>
+
+  <div class="pregunta">
+    <p>Los alimentos y materias primas que por su naturaleza requieran mantenerse refrigerados o congelados son transportados y distribuidos bajo condiciones que aseguren y garanticen el mantenimiento de las condiciones de refrigeración o congelación hasta su destino final.</p>
+    <select id="r12" required>
+      <option value="">Seleccione...</option>
+    </select>
+  </div>
+
+  <div class="pregunta">
+    <p>Los vehículos que posean sistemas de refrigeración o congelación, son sometidos a revisión periódica, con el fin de que su funcionamiento garantice las temperaturas requeridas para la buena conservación de los alimentos y cuentan con indicadores y sistemas de registro de estas temperaturas.</p>
+    <select id="r13" required>
+      <option value="">Seleccione...</option>
+    </select>
+  </div>
+
+  <div class="pregunta">
+    <p>Se revisan los vehículos antes de cargar los alimentos, con el fin de asegurar que se encuentren en buenas condiciones sanitarias.</p>
+    <select id="r14" required>
+      <option value="">Seleccione...</option>
+    </select>
+  </div>
+
+  <div class="pregunta">
+    <p>Los vehículos son adecuados para el fin perseguido y fabricados con materiales tales que permitan una limpieza fácil y completa.</p>
+    <select id="r15" required>
+      <option value="">Seleccione...</option>
+    </select>
+  </div>
+
+  <div class="pregunta">
+    <p>Se evidencian elementos para evitar el contacto de los alimentos directamente con el piso del vehículo.</p>
+    <select id="r16" required>
+      <option value="">Seleccione...</option>
+    </select>
+  </div>
+
+  <div class="pregunta">
+    <p>Se evidencia que no se transportan conjuntamente en un mismo vehículo alimentos y materias primas con sustancias peligrosas y otras que por su naturaleza representen riesgo de contaminación del alimento.</p>
+    <select id="r17" required>
+      <option value="">Seleccione...</option>
+    </select>
+  </div>
+
+  <div class="pregunta">
+    <p>Los vehículos transportadores de alimentos llevan en su exterior en forma claramente visible la leyenda: “Transporte de Alimentos”.</p>
+    <select id="r18" required>
+      <option value="">Seleccione...</option>
+    </select>
+  </div>
+</div>
+
+
+    <!-- ====== RESULTADOS ====== -->
+    <div class="section-body">
+      <p id="resultadoConteo">Total ítems evaluados: 0 de 8</p>
+      <p id="resultadoPorcentaje">Porcentaje cumplimiento: 0%</p>
+      <input type="hidden" id="porcentaje_r11_r18" name="porcentaje_r11_r18">
+    </div>
+
+    <!-- ====== OBSERVACIONES Y EVIDENCIA ====== -->
+    <h3 class="section-title">Observaciones y evidencia</h3>
+    <div class="grid section-body">
+      <label>Observaciones
+        <textarea id="observacionesVCT" rows="5"></textarea>
+      </label>
+    </div>
+
+   <!-- ====== EVIDENCIA FOTOGRAFICA ====== -->
+   <h3 class="section-title">Evidencia fotográfica</h3>
+  <div class="section-body">
+  <label>Fotos (máx. 10)
+    <input
+      type="file"
+      id="fotos"
+      name="fotos[]"
+      accept="image/*"
+      capture="environment"
+      multiple
+    >
+  </label>
+
+  <!-- Campo oculto donde se guardan las URLs -->
+  <input type="hidden" id="urls_fotos" name="urls_fotos">
+  
+  <!-- Vista previa -->
+  <div id="preview-fotos" class="preview-grid"></div>
+</div>
+
+
+    <!-- ====== RESPONSABLE ====== -->
+    <h3 class="section-title">Responsable de la verificación</h3>
+    <div class="grid grid-2 section-body">
+      <label>Responsable verificación
+        <select id="id_responsables_fk" name="id_responsables_fk" required>
+          <option value="">Seleccione...</option>
+        </select>
+      </label>
+
+      <label>Cargo
+        <input type="text" id="cargo_res" name="cargo_res" readonly>
+      </label>
+    </div>
+
+    <!-- ====== FIRMA ====== -->
+    <div class="sig-wrap section-body">
+      <div class="sig-header">
+        <span>Firma</span>
+        <div class="sig-actions">
+          <button type="button" id="sig-clear" class="btn small">Borrar</button>
+        </div>
+      </div>
+      <canvas id="sig-canvas" width="600" height="180"></canvas>
+    </div>
+
+    <!-- ====== BOTÓN GUARDAR ====== -->
+    <div class="row">
+      <button class="btn" type="submit">Guardar</button>
+      <span id="save-status" class="muted"></span>
+    </div>
+  </form>
+</section>
+
+    <section id="sec-pend" class="card" hidden data-role="pend">
+      <h2>Pendientes por enviar</h2>
+      <div id="pending-list" class="list"></div>
+    </section>
+    <section id="sec-sent" class="card" hidden data-role="sent">
+      <h2>Enviados (historial local)</h2>
+      <div id="sent-list" class="list"></div>
+    </section>
+
+   </div>
+  </main>
+
+
+
+  <footer class="app-footer">
+    <div class="wrap">
+      <div><small>© <span id="year"></span> PAE Antioquia — v<span id="app-version">3.0.0</span></small><br><small
+          id="status-text" class="muted">Estado: <span id="status-conn">Offline</span></small></div>
+      <div class="links"><a class="link" href="#"
+          onclick="alert('Política de datos del PAE…');return false;">Privacidad</a><a class="link" href="#"
+          onclick="alert('Soporte: soporte@pae.gov.co');return false;">Soporte</a>
+        <div class="logos"><img src="assets/logo-pae.png"><img src="assets/logo-org.png"></div>
+      </div>
+    </div>
+  </footer>
+  <script src="db.js"></script>
+  <script src="app.js"></script>
+  <script>if ('serviceWorker' in navigator) { navigator.serviceWorker.register('./sw.js'); } document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+
+</html>
