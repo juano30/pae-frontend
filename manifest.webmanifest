@@ -1,0 +1,21 @@
+{
+  "name": "PAE – Offline (Multiform)",
+  "short_name": "PAE",
+  "start_url": "./",
+  "display": "standalone",
+  "scope": "./",
+  "background_color": "#0a1220",
+  "theme_color": "#00bcd4",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
