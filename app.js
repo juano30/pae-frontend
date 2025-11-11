@@ -8,7 +8,7 @@ let catalogs = {
 const $ = s => document.querySelector(s);
 
 // URL base del backend en InfinityFree
-const API_BASE = "https://paeapp.epizy.com/";
+const API_BASE = "https://pae.42web.io/";
 
 // Endpoints
 const URL_GUARDAR_VCT      = API_BASE + "guardar_form_vct.php";
@@ -35,11 +35,6 @@ const munSelect = $('#municipio');
 // Selects de transporte y CTV
 const selTransporte = document.getElementById('id_transporteVCT_fk');
 const camposR = ["r11", "r12", "r13", "r14", "r15", "r16", "r17", "r18"];
-
-// Fotos evidencia (hasta 10)
-//const inputFotos   = document.getElementById('fotos');
-//const previewFotos = document.getElementById('preview-fotos');
-//let fotosSeleccionadas = [];
 
 // ----------------------
 // Estado de red / PWA
@@ -141,7 +136,7 @@ async function loadCatalogs() {
   catalogs = cached ? JSON.parse(cached) : { subregiones: [], municipios: [] };
 
   try {
-    const r = await fetch('/pae/server/catalogs.php?type=full', {
+    const r = await fetch(API_BASE + 'catalogs.php?type=full', {
       headers: { 'Authorization': 'Bearer ' + token }
     });
     if (!r.ok) throw new Error('HTTP ' + r.status);
@@ -322,7 +317,7 @@ formLogin?.addEventListener('submit', async (e) => {
   const pass = $('#pass').value;
 
   try {
-    const r = await fetch('/pae/server/login.php', {
+    const r = await fetch(API_BASE + 'login.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ user, pass })
@@ -476,7 +471,7 @@ formReport?.addEventListener('submit', async (e) => {
   const user_role  = currentUser?.role    || '';
 
 
-    const rec = {
+  const rec = {
     id: uid(),
     form,
     fecha,
@@ -599,7 +594,7 @@ async function uploadFormVCT(item, token) {
     fd.append('firma', blob2, 'firma.png');
   }
 
-  const r = await fetch('/pae/server/guardar_form_vct.php', {
+  const r = await fetch(URL_GUARDAR_VCT, {
     method: 'POST',
     headers: { 'Authorization': 'Bearer ' + token },
     body: fd
@@ -610,9 +605,6 @@ async function uploadFormVCT(item, token) {
   return d;
 }
 
-
-
-// ⬇️ agrega aquí la función
 async function uploadFotosVCT(item, token) {
   if (!item.fotos || !item.fotos.length) {
     console.log('Sin fotos para', item.id);
@@ -629,7 +621,7 @@ async function uploadFotosVCT(item, token) {
     fd.append('id_form_vct', item.id);
     fd.append('foto', blob, `vct_${item.id}_${i + 1}.jpg`);
 
-    const r = await fetch('/pae/server/upload_foto_vct.php', {
+    const r = await fetch(URL_UPLOAD_FOTO_VCT, {
       method: 'POST',
       headers: { 'Authorization': 'Bearer ' + token },
       body: fd
@@ -647,7 +639,6 @@ async function uploadFotosVCT(item, token) {
     console.log('Foto', i + 1, 'guardada como', d.ruta);
   }
 }
-
 
 async function uploadItem(item, token) {
   if (item.form === 'visita') {
@@ -681,7 +672,7 @@ async function uploadItem(item, token) {
     fd.append('token', token);
   }
 
-  const r = await fetch('/pae/server/upload.php', {
+  const r = await fetch(API_BASE + 'upload.php', {
     method: 'POST',
     headers: { 'Authorization': 'Bearer ' + token },
     body: fd
@@ -691,7 +682,6 @@ async function uploadItem(item, token) {
   if (!d.ok) throw new Error(d.error || 'Error backend');
   return d;
 }
-
 
 // Procesa cola offline
 async function processQueue() {
@@ -788,7 +778,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!selectResponsable || !inputCargo) return;
 
-  fetch("server/obtener_responsables.php")
+  fetch(URL_RESPONSABLES)
     .then(response => response.json())
     .then(data => {
       data.forEach(res => {
@@ -819,7 +809,6 @@ function updateConn() {
 addEventListener('online', updateConn);
 addEventListener('offline', updateConn);
 updateConn();
-
 
 fotosSeleccionadas = [];
 if (previewFotos) previewFotos.innerHTML = '';
