@@ -1,3 +1,10 @@
+// === CONFIGURACIÓN API (InfinityFree) ===
+const API_BASE = "https://pae.42web.io/"; // tu dominio de InfinityFree
+
+// Endpoints
+const URL_GUARDAR_VCT      = API_BASE + "guardar_form_vct.php";
+const URL_RESPONSABLES     = API_BASE + "obtener_responsables.php";
+const URL_UPLOAD_FOTO_VCT  = API_BASE + "upload_foto_vct.php";
 
 const DB_NAME='pae_mf_db'; const DB_VERSION=1;
 const OUTBOX='outbox', SENT='sent', AUTH='auth', USER='user';
